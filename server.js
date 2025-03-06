@@ -296,7 +296,7 @@ app.get("/", (req, res) => {
 (async () => {
   for(i = 0; i < 3; i++){
     await fetchRedditContent();
-    redditPage++;
+    // redditPage++;
   }
   
   generateInitialPatches();
