@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const PORT = 80;
+const PORT = process.env.PORT || 80;
 
 app.use(cors());
 
@@ -11,7 +11,8 @@ let redditPage = 1;
 // Fetch and cache Reddit content once on startup
 async function fetchRedditContent() {
   try {
-    const response = await fetch(`https://old.reddit.com/r/comedy/top.json?raw_json=${redditPage}&t=all`);
+    const response = await fetch(`https://old.reddit.com/r/comedy/top.json?raw_json=1&t=all`);
+    console.log(response);
     const json = await response.json();
 
     const newItems = json.data.children
@@ -217,7 +218,7 @@ app.get("/more", async(req, res) => {
 
 async function getNewShorts() {
   try {
-    const response = await fetch(`https://old.reddit.com/r/comedy/top.json?raw_json=${page}&t=all`);
+    const response = await fetch(`https://old.reddit.com/r/comedy/top.json?raw_json=1&t=all`);
     const json = await response.json();
 
     page += 1; 
@@ -294,7 +295,7 @@ app.get("/", (req, res) => {
 
 // Initialize: fetch Reddit content, generate patches, then start the server
 (async () => {
-  for(i = 0; i < 3; i++){
+  for(i = 0; i < 2; i++){
     await fetchRedditContent();
     // redditPage++;
   }
