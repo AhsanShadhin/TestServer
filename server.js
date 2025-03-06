@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 80;
+const fs = require('fs');
 
 app.use(cors());
 
@@ -11,9 +12,9 @@ let redditPage = 1;
 // Fetch and cache Reddit content once on startup
 async function fetchRedditContent() {
   try {
-    const response = await fetch(`https://old.reddit.com/r/comedy/top.json?raw_json=1&t=all`);
-    console.log(response);
-    const json = await response.json();
+    // const response = await fetch(`https://old.reddit.com/r/comedy/top.json?raw_json=1&t=all`);
+    const response = fs.readFileSync('sample.json', 'utf8');
+    const json = await JSON.parse(response);
 
     const newItems = json.data.children
       .filter(post => {
